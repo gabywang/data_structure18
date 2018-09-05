@@ -27,7 +27,7 @@ public class NBody {
         return result;
     }
     /**Draw all the planets in the universe. */
-    public static void drawPlanets(Planet[] planets) {
+    private static void drawPlanets(Planet[] planets) {
         StdDraw.picture(0, 0, "images/starfield.jpg");
         for (int i = 0; i < planets.length; i++) {
             planets[i].draw();
