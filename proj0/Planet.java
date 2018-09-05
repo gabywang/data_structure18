@@ -66,5 +66,17 @@ public class Planet {
             }
         }
         return netForce;
-    } 
+    }
+
+    /**Update the planet's position and velocity instance variables. */
+    public void update(double dt, double fX, double fY) {
+        xxVel = xxVel + dt * fX / mass;
+        yyVel = yyVel + dt * fY / mass;
+        xxPos = xxPos + dt * xxVel;
+        yyPos = yyPos + dt * yyVel;
+    }
+
+    public void draw() {
+        StdDraw.picture(xxPos, yyPos, "images/" + imgFileName);
+    }
 }
