@@ -26,9 +26,17 @@ public class NBody {
         }
         return result;
     }
+    /**Draw all the planets in the universe. */
+    public static void drawPlanets(Planet[] planets) {
+        StdDraw.picture(0, 0, "images/starfield.jpg");
+        for (int i = 0; i < planets.length; i++) {
+            planets[i].draw();
+        }
+    }
+
     /**Collect all needed input. */
     public static void main(String args[]) {
-        double T, dt, radius;
+        double T, dt, radius, t = 0;
         String filename;
         Planet[] planets;
         T = Double.parseDouble(args[0]);
@@ -38,11 +46,24 @@ public class NBody {
         planets = readPlanets(filename);
         /**Draw the background and planets. */
         StdDraw.setScale(-radius, radius);
-        StdDraw.picture(0, 0, "images/starfield.jpg");
-        for (int i = 0; i < planets.length; i++) {
-            planets[i].draw();
-        }
+        drawPlanets(planets);
+
+        /**Create the animation. */
+        StdDraw.enableDoubleBuffering();
+        while (t < T) {
+            double[] xForces = new double[planets.length];
+            double[] yForces = new double[planets.length];
+            for(int i = 0; i < planets.length; i++) {
+                xForces[i] = planets[i].calcNetForceExertedByX(planets);
+                yForces[i] = planets[i].calcNetForceExertedByY(planets);
+            }
+            for(int i = 0; i < planets.length; i++) {
+                planets[i].update(dt, xForces[i], yForces[i]);
+            }
+            StdDraw.show();
+            StdDraw.pause(10);
+            drawPlanets(planets);
+            t += dt;
+        }       
     }
-
-
 }
