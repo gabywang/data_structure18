@@ -10,14 +10,30 @@ public class ArrayDeque<T> {
         items=(T[])new Object[8];
         size = 0;
     }
-    /** Need to be finished later.
-     *
-     */
+
     /** Resize the array to new capacity.*/
     public void resize(int capacity) {
         T[] a = (T[]) new Object[capacity];
-        if(capacity>items.length) {
-            System.arraycopy(items,0,a,0,1);
+        /** Increase the size.*/
+        if(capacity > items.length) {
+            System.arraycopy(items, nextLast, a,0, items.length -(nextFirst+1));
+            System.arraycopy(items, 0, a, items.length -(nextFirst+1), nextFirst+1);
+            items = a;
+            /** The first element of the new array start from index 0,
+             *  So the nextFirst becomes the last index of the new array.*/
+            nextFirst = items.length - 1;
+            nextLast = size;
+        } else if(nextLast - nextFirst -1 == size) {
+            System.arraycopy(items, changeIndex(nextFirst+1), a, 0, size);
+            items = a;
+            nextFirst = items.length - 1;
+            nextLast = size;
+        } else {
+            System.arraycopy(items, changeIndex(nextFirst+1), a, 0, items.length -(nextFirst+1));
+            System.arraycopy(items, 0, a, items.length -(nextFirst+1), changeIndex(nextLast-1));
+            items = a;
+            nextFirst = items.length -1;
+            nextLast = size;
         }
 
     }
@@ -57,6 +73,16 @@ public class ArrayDeque<T> {
     /**  Returns the number of items in the deque.*/
     public int size() {
         return size;
+    }
+
+    /** Prints the items in the deque from first to last, separated by a space.*/
+    public void printDeque() {
+        int count = changeIndex(nextFirst+1);
+        while(count != changeIndex(nextLast-1)) {
+            System.out.print(items[count] + " ");
+            count = changeIndex(count + 1);
+        }
+        System.out.println(items[count]);
     }
 
     /** Removes and returns the item at the front of the deque.
@@ -100,4 +126,3 @@ public class ArrayDeque<T> {
         return items[changeIndex(nextFirst + 1 + index)];
     }
 }
-
