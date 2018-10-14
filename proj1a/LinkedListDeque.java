@@ -3,9 +3,9 @@ public class LinkedListDeque<T> {
     private int size;
 
     private class StuffNode {
-        public T item;
-        public StuffNode next;
-        public StuffNode prev;
+        private T item;
+        private StuffNode next;
+        private StuffNode prev;
 
         public StuffNode(T i, StuffNode p, StuffNode n) {
             item = i;
@@ -38,7 +38,7 @@ public class LinkedListDeque<T> {
 
     /** Returns true if deque is empty, false otherwise.*/
     public boolean isEmpty() {
-        if(sentinel.next.item == null && sentinel.prev.item == null) {
+        if (sentinel.next.item == null && sentinel.prev.item == null) {
             return true;
         }
         return false;
@@ -52,7 +52,7 @@ public class LinkedListDeque<T> {
     /** Prints the items in the deque from first to last, separated by a space.*/
     public void printDeque() {
         StuffNode temp = sentinel;
-        while(temp.next.item != null) {
+        while (temp.next.item != null) {
             System.out.print(temp.next.item + " ");
             temp = temp.next;
         }
@@ -64,7 +64,7 @@ public class LinkedListDeque<T> {
     public T removeFirst() {
         sentinel.next = sentinel.next.next;
         sentinel.next.prev = sentinel;
-        size --;
+        size--;
         return sentinel.next.item;
     }
 
@@ -73,7 +73,7 @@ public class LinkedListDeque<T> {
     public T removeLast() {
         sentinel.prev = sentinel.prev.prev;
         sentinel.prev.next = sentinel;
-        size --;
+        size--;
         return sentinel.prev.item;
     }
 
@@ -82,7 +82,7 @@ public class LinkedListDeque<T> {
     public T get(int index) {
         StuffNode temp = sentinel.next;
         int i = 0;
-        while(i < index) {
+        while (i < index) {
             temp = temp.next;
             i++;
         }
@@ -94,7 +94,7 @@ public class LinkedListDeque<T> {
         if (i == 0) {
             return temp.item;
         }
-        return getRecursiveHelper(temp.next, i-1);
+        return getRecursiveHelper(temp.next, i - 1);
     }
 
     /** Same as get, but uses recursion.*/

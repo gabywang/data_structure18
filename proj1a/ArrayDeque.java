@@ -9,10 +9,12 @@ public class ArrayDeque<T> {
     public ArrayDeque() {
         items = (T[]) new Object[8];
         size = 0;
+        nextFirst = 7;
+        nextLast = 0;
     }
 
     /** Resize the array to new capacity.*/
-    public void resize(int capacity) {
+    private void resize(int capacity) {
         T[] a = (T[]) new Object[capacity];
         /** Increase the size.*/
         if (capacity > items.length) {
@@ -29,8 +31,10 @@ public class ArrayDeque<T> {
             nextFirst = items.length - 1;
             nextLast = size;
         } else {
-            System.arraycopy(items, changeIndex(nextFirst + 1), a, 0, items.length - (nextFirst + 1));
-            System.arraycopy(items, 0, a, items.length - (nextFirst + 1), changeIndex(nextLast - 1));
+            System.arraycopy(items, changeIndex(nextFirst + 1), a, 0,
+                    items.length - (nextFirst + 1));
+            System.arraycopy(items, 0, a, items.length - (nextFirst + 1),
+                    changeIndex(nextLast - 1));
             items = a;
             nextFirst = items.length - 1;
             nextLast = size;
@@ -56,7 +60,7 @@ public class ArrayDeque<T> {
             resize(size * 2);
         }
         items[nextFirst] = x;
-        size ++;
+        size++;
         nextFirst = changeIndex(nextFirst - 1);
     }
 
@@ -66,7 +70,7 @@ public class ArrayDeque<T> {
             resize(size * 2);
         }
         items[nextLast] = x;
-        size ++;
+        size++;
         nextLast = changeIndex(nextLast + 1);
     }
 
@@ -83,7 +87,7 @@ public class ArrayDeque<T> {
     /** Prints the items in the deque from first to last, separated by a space.*/
     public void printDeque() {
         int count = changeIndex(nextFirst + 1);
-        while(count != changeIndex(nextLast - 1)) {
+        while (count != changeIndex(nextLast - 1)) {
             System.out.print(items[count] + " ");
             count = changeIndex(count + 1);
         }
@@ -97,9 +101,9 @@ public class ArrayDeque<T> {
             return null;
         }
         if (items.length >= 16 && size < items.length / 4) {
-            resize(items.length/2);
+            resize(items.length / 2);
         }
-        size --;
+        size--;
         T afterRemove = items[changeIndex(nextFirst + 1)];
         items[changeIndex(nextFirst + 1)] = null;
         nextFirst = changeIndex(nextFirst + 1);
@@ -113,9 +117,9 @@ public class ArrayDeque<T> {
             return null;
         }
         if (items.length >= 16 && size < items.length / 4) {
-            resize(items.length/2);
+            resize(items.length / 2);
         }
-        size --;
+        size--;
         T afterRemove = items[changeIndex(nextLast - 1)];
         items[changeIndex(nextLast - 1)] = null;
         nextLast = changeIndex(nextLast - 1);
