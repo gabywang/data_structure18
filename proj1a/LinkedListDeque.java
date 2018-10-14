@@ -2,7 +2,7 @@ public class LinkedListDeque<T> {
     private StuffNode sentinel;
     private int size;
 
-    public class StuffNode {
+    private class StuffNode {
         public T item;
         public StuffNode next;
         public StuffNode prev;
@@ -90,7 +90,7 @@ public class LinkedListDeque<T> {
     }
 
     /** A helper function to fulfill the recursive function.*/
-    public T getRecursiveHelper(StuffNode temp, int i) {
+    private T getRecursiveHelper(StuffNode temp, int i) {
         if (i == 0) {
             return temp.item;
         }
